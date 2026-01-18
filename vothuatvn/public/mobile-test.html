@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Mobile Touch Test - VoThuatVN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(220, 38, 38, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #dc2626;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .test-section {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .test-section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ef4444;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 5px;
+            min-height: 44px;
+            min-width: 100px;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            background: #991b1b;
+        }
+
+        .btn-secondary {
+            background: #334155;
+        }
+
+        .btn-secondary:active {
+            background: #475569;
+        }
+
+        .link {
+            display: block;
+            color: #60a5fa;
+            text-decoration: none;
+            padding: 12px;
+            margin: 5px 0;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 6px;
+            touch-action: manipulation;
+        }
+
+        .link:active {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .card {
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+
+        .card:active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            margin: 5px 0;
+            touch-action: manipulation;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #dc2626;
+        }
+
+        .result {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .counter {
+            font-size: 32px;
+            font-weight: bold;
+            color: #dc2626;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .log {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .log-entry {
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Mobile Touch Test</h1>
+
+        <!-- Button Tests -->
+        <div class="test-section">
+            <h2>1. Button Tests</h2>
+            <button class="btn" onclick="showResult('btn1')">Primary Button</button>
+            <button class="btn btn-secondary" onclick="showResult('btn2')">Secondary Button</button>
+            <div id="btn-result" class="result"></div>
+        </div>
+
+        <!-- Link Tests -->
+        <div class="test-section">
+            <h2>2. Link Tests</h2>
+            <a href="#" class="link" onclick="event.preventDefault(); showResult('link1')">Test Link 1</a>
+            <a href="#" class="link" onclick="event.preventDefault(); showResult('link2')">Test Link 2</a>
+            <div id="link-result" class="result"></div>
+        </div>
+
+        <!-- Card Tests -->
+        <div class="test-section">
+            <h2>3. Card Tests (Click to count)</h2>
+            <div class="counter" id="counter">0</div>
+            <div class="card" onclick="incrementCounter()">
+                <strong>Clickable Card</strong>
+                <p>Tap this card to increment counter</p>
+            </div>
+        </div>
+
+        <!-- Form Tests -->
+        <div class="test-section">
+            <h2>4. Form Input Tests</h2>
+            <input type="text" placeholder="Type something here..." id="textInput">
+            <textarea placeholder="Type in textarea..." rows="3" id="textArea"></textarea>
+            <button class="btn" onclick="testForm()">Submit Form</button>
+            <div id="form-result" class="result"></div>
+        </div>
+
+        <!-- Touch Event Log -->
+        <div class="test-section">
+            <h2>5. Touch Event Log</h2>
+            <button class="btn btn-secondary" onclick="clearLog()">Clear Log</button>
+            <div class="log" id="eventLog"></div>
+        </div>
+
+        <!-- Device Info -->
+        <div class="test-section">
+            <h2>6. Device Information</h2>
+            <div id="deviceInfo" style="font-size: 14px; line-height: 1.8;"></div>
+        </div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let eventCount = 0;
+
+        // Show result message
+        function showResult(id) {
+            const results = {
+                'btn1': 'Primary Button clicked! ✅',
+                'btn2': 'Secondary Button clicked! ✅',
+                'link1': 'Link 1 clicked! ✅',
+                'link2': 'Link 2 clicked! ✅'
+            };
+
+            const resultDiv = id.startsWith('btn') ?
+                document.getElementById('btn-result') :
+                document.getElementById('link-result');
+
+            resultDiv.textContent = results[id];
+            resultDiv.classList.add('show');
+
+            logEvent('Click', id + ' was clicked');
+
+            setTimeout(() => {
+                resultDiv.classList.remove('show');
+            }, 2000);
+        }
+
+        // Increment counter
+        function incrementCounter() {
+            clickCount++;
+            document.getElementById('counter').textContent = clickCount;
+            logEvent('Card Click', 'Counter: ' + clickCount);
+        }
+
+        // Test form
+        function testForm() {
+            const textValue = document.getElementById('textInput').value;
+            const textAreaValue = document.getElementById('textArea').value;
+            const resultDiv = document.getElementById('form-result');
+
+            if (textValue || textAreaValue) {
+                resultDiv.textContent = 'Form submitted! ✅ Text: "' + (textValue || textAreaValue) + '"';
+            } else {
+                resultDiv.textContent = 'Form submitted! ✅ (empty)';
+            }
+
+            resultDiv.classList.add('show');
+            logEvent('Form Submit', 'Values: ' + textValue + ', ' + textAreaValue);
+
+            setTimeout(() => {
+                resultDiv.classList.remove('show');
+            }, 2000);
+        }
+
+        // Log events
+        function logEvent(type, message) {
+            eventCount++;
+            const log = document.getElementById('eventLog');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.textContent = `[${eventCount}] ${new Date().toLocaleTimeString()} - ${type}: ${message}`;
+            log.insertBefore(entry, log.firstChild);
+
+            // Keep only last 20 entries
+            while (log.children.length > 20) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        // Clear log
+        function clearLog() {
+            document.getElementById('eventLog').innerHTML = '';
+            eventCount = 0;
+            logEvent('System', 'Log cleared');
+        }
+
+        // Touch event listeners
+        document.addEventListener('touchstart', (e) => {
+            logEvent('Touch Start', e.target.tagName + (e.target.className ? '.' + e.target.className.split(' ')[0] : ''));
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            logEvent('Touch End', e.target.tagName);
+        }, { passive: true });
+
+        // Click event listener
+        document.addEventListener('click', (e) => {
+            logEvent('Click Event', e.target.tagName + (e.target.className ? '.' + e.target.className.split(' ')[0] : ''));
+        });
+
+        // Display device info
+        function displayDeviceInfo() {
+            const info = document.getElementById('deviceInfo');
+            const isTouchDevice = 'ontouchstart' in window;
+
+            info.innerHTML = `
+                <strong>User Agent:</strong><br>
+                ${navigator.userAgent}<br><br>
+                <strong>Screen Size:</strong> ${window.screen.width} x ${window.screen.height}<br>
+                <strong>Viewport Size:</strong> ${window.innerWidth} x ${window.innerHeight}<br>
+                <strong>Device Pixel Ratio:</strong> ${window.devicePixelRatio}<br>
+                <strong>Touch Support:</strong> ${isTouchDevice ? '✅ Yes' : '❌ No'}<br>
+                <strong>Platform:</strong> ${navigator.platform}<br>
+                <strong>Online:</strong> ${navigator.onLine ? '✅ Yes' : '❌ No'}
+            `;
+        }
+
+        // Initialize
+        displayDeviceInfo();
+        logEvent('System', 'Test page loaded');
+
+        // Update viewport size on resize
+        window.addEventListener('resize', () => {
+            displayDeviceInfo();
+            logEvent('System', 'Window resized to ' + window.innerWidth + 'x' + window.innerHeight);
+        });
+    </script>
+</body>
+
+</html>

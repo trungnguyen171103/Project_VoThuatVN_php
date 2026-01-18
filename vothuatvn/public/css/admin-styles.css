@@ -1,0 +1,1342 @@
+/* ============================================
+   VoThuatVN Admin - Modern Design System
+   Dark Gray-Black Theme with Red Accents
+   ============================================ */
+
+/* ============================================
+   CSS VARIABLES - Design Tokens
+   ============================================ */
+:root {
+    /* Color Palette - Dark Theme */
+    --color-primary: #dc2626;
+    --color-primary-dark: #b91c1c;
+    --color-primary-light: #ef4444;
+
+    --color-bg-1: #0a0e1a;
+    --color-bg-2: #0f172a;
+    --color-bg-3: #1e293b;
+    --color-bg-4: #334155;
+
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e2e8f0;
+    --color-text-muted: #94a3b8;
+    --color-text-disabled: #64748b;
+
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-hover: rgba(220, 38, 38, 0.3);
+
+    /* Status Colors */
+    --color-success: #22c55e;
+    --color-warning: #f97316;
+    --color-danger: #ef4444;
+    --color-info: #3b82f6;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    --gradient-dark: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --gradient-warning: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 20px rgba(220, 38, 38, 0.3);
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+
+    /* Z-index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* ============================================
+   LIGHT THEME VARIABLES
+   ============================================ */
+[data-theme="light"] {
+    /* Color Palette - Light Theme */
+    --color-bg-1: #f8fafc;
+    --color-bg-2: #ffffff;
+    --color-bg-3: #f1f5f9;
+    --color-bg-4: #e2e8f0;
+
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #1e293b;
+    --color-text-muted: #64748b;
+    --color-text-disabled: #94a3b8;
+
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-border-hover: rgba(220, 38, 38, 0.3);
+
+    /* Gradients */
+    --gradient-dark: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 20px rgba(220, 38, 38, 0.15);
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Fix for mobile touch */
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+    tap-highlight-color: rgba(220, 38, 38, 0.2);
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    /* Prevent text size adjustment on mobile */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--color-bg-1);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Enable touch scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent pull-to-refresh */
+    overscroll-behavior-y: contain;
+    /* Smooth theme transition */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Force white text color for all elements */
+body,
+body * {
+    color: var(--color-text-primary);
+}
+
+/* Specific overrides for common elements */
+p,
+span,
+div,
+label,
+a,
+li,
+td,
+th,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-text-primary) !important;
+}
+
+/* Table text */
+.table,
+.table * {
+    color: var(--color-text-primary) !important;
+}
+
+/* Form elements */
+input,
+textarea,
+select,
+option {
+    color: var(--color-text-primary) !important;
+}
+
+/* Preserve specific color classes */
+.text-muted {
+    color: var(--color-text-muted) !important;
+}
+
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.4s ease;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Glassmorphism */
+.glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+    background: rgba(30, 41, 59, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Hover Effects */
+.hover-lift {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+}
+
+.hover-scale {
+    transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Text Utilities */
+.text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Loading States */
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--color-bg-3) 0%,
+            var(--color-bg-4) 50%,
+            var(--color-bg-3) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   CARD COMPONENTS
+   ============================================ */
+.card {
+    background: var(--color-bg-2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+}
+
+.card:hover,
+.card.touching {
+    border-color: var(--color-border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.card-body {
+    padding: var(--spacing-md) 0;
+}
+
+/* Stat Cards */
+.stat-card {
+    background: var(--color-bg-2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+}
+
+.stat-card:hover::before {
+    transform: scaleX(1);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
+    border-color: var(--color-primary);
+}
+
+.stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1;
+    margin: var(--spacing-sm) 0;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    opacity: 0.15;
+    transition: opacity var(--transition-base);
+}
+
+.stat-card:hover .stat-icon {
+    opacity: 0.25;
+}
+
+/* Warning Cards */
+.warning-card {
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    animation: fadeInUp 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.warning-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.warning-card.orange {
+    background: var(--gradient-warning);
+}
+
+.warning-card h5 {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.warning-card .btn {
+    margin-top: var(--spacing-md);
+}
+
+/* ============================================
+   BUTTON COMPONENTS
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    /* Mobile touch support */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before,
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.btn-secondary {
+    background: var(--color-bg-3);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover,
+.btn-secondary:active {
+    background: var(--color-bg-4);
+    border-color: var(--color-primary);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn-outline:hover,
+.btn-outline:active {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-lg);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ============================================
+   FORM COMPONENTS
+   ============================================ */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background: var(--color-bg-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    background: var(--color-bg-2);
+    color: var(--color-text-primary);
+}
+
+.form-control::placeholder {
+    color: var(--color-text-disabled);
+}
+
+/* Ensure all input types have visible text */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+input[type="month"],
+input[type="search"],
+textarea,
+select {
+    color: var(--color-text-primary);
+}
+
+/* Targeted fix for attendance status dropdown visibility */
+.status-select-attendance {
+    background-color: var(--color-bg-3);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.status-select-attendance:focus,
+.status-select-attendance:active {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* 
+   FORCE HIGH CONTRAST FOR OPTIONS 
+   Some browsers (Chrome/Windows) stubbornly use a white background for the native list.
+   By forcing black text, we guarantee it remains readable.
+*/
+.status-select-attendance option {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    color: var(--color-text-secondary);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23cbd5e1' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-md) center;
+    padding-right: var(--spacing-2xl);
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* ============================================
+   TABLE COMPONENTS
+   ============================================ */
+.table-container {
+    background: var(--color-bg-2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--color-bg-2) !important;
+}
+
+.table thead {
+    background: var(--color-bg-3);
+}
+
+.table thead th {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+    border-bottom: 2px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    background: var(--color-bg-3) !important;
+    z-index: 10;
+}
+
+.table tbody tr {
+    transition: all var(--transition-fast);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-2) !important;
+}
+
+.table tbody tr:hover {
+    background: rgba(220, 38, 38, 0.1) !important;
+    transform: scale(1.01);
+}
+
+.table tbody td {
+    padding: var(--spacing-md);
+    color: var(--color-text-primary) !important;
+    background: transparent !important;
+}
+
+/* Force dark background for all table elements */
+.table,
+.table *,
+.table tr,
+.table td,
+.table th {
+    background-color: transparent !important;
+}
+
+.table tbody {
+    background: var(--color-bg-2) !important;
+}
+
+/* ============================================
+   BADGE COMPONENTS
+   ============================================ */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--color-success);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badge-warning {
+    background: rgba(249, 115, 22, 0.2);
+    color: var(--color-warning);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--color-danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-info);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* ============================================
+   MODAL COMPONENTS
+   ============================================ */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--color-bg-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    animation: scaleIn 0.3s ease;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-lg);
+}
+
+.modal-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+}
+
+/* ============================================
+   ALERT COMPONENTS
+   ============================================ */
+.alert {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    border-left: 4px solid;
+    animation: slideInRight 0.4s ease;
+}
+
+.alert-success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.alert-warning {
+    background: rgba(249, 115, 22, 0.1);
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--color-info);
+    color: var(--color-info);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) {
+    :root {
+        --font-size-base: 0.9375rem;
+        --font-size-xl: 1.125rem;
+        --font-size-2xl: 1.375rem;
+        --font-size-3xl: 1.75rem;
+    }
+
+    .stat-card {
+        padding: var(--spacing-lg);
+    }
+
+    .stat-value {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+    :root {
+        --font-size-base: 0.875rem;
+        --font-size-xl: 1rem;
+        --font-size-2xl: 1.25rem;
+        --font-size-3xl: 1.5rem;
+        --spacing-lg: 1rem;
+        --spacing-xl: 1.5rem;
+    }
+
+    .card,
+    .stat-card,
+    .warning-card {
+        padding: var(--spacing-md);
+    }
+
+    .table-container {
+        padding: var(--spacing-sm);
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+
+    .modal-content {
+        margin: var(--spacing-md);
+    }
+}
+
+/* Small Mobile (< 576px) */
+@media (max-width: 575px) {
+    .stat-value {
+        font-size: var(--font-size-xl);
+    }
+
+    .warning-card h5 {
+        font-size: var(--font-size-base);
+    }
+
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .sidebar,
+    .top-navbar,
+    .btn,
+    .no-print {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .table {
+        border: 1px solid #000;
+    }
+
+    .table thead th,
+    .table tbody td {
+        border: 1px solid #000;
+        color: black;
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-bg-4);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-bg-4) var(--color-bg-2);
+}
+
+/* ============================================
+   MOBILE TOUCH FIXES
+   ============================================ */
+/* Ensure all clickable elements work on mobile */
+a,
+button,
+input,
+select,
+textarea,
+label,
+[role="button"],
+[onclick],
+.clickable {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+}
+
+/* Fix for links */
+a {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Fix for menu items */
+.menu-item {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+}
+
+.menu-item:active {
+    background: rgba(220, 38, 38, 0.15);
+    color: #ffffff;
+    border-left-color: #dc2626;
+}
+
+/* Fix for cards */
+.card,
+.stat-card,
+.warning-card {
+    touch-action: auto;
+}
+
+.stat-card {
+    cursor: pointer;
+}
+
+.stat-card:active {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(220, 38, 38, 0.2);
+}
+
+/* Fix for table rows */
+.table tbody tr {
+    touch-action: auto;
+}
+
+.table tbody tr:active {
+    background: rgba(220, 38, 38, 0.15) !important;
+}
+
+/* Fix for form controls */
+input,
+select,
+textarea {
+    touch-action: manipulation;
+}
+
+/* Prevent double-tap zoom on buttons */
+button,
+.btn,
+a.btn {
+    touch-action: manipulation;
+}
+
+/* Fix for Bootstrap components */
+.btn-close,
+.dropdown-toggle,
+.nav-link {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+}
+
+/* Ensure modals work on mobile */
+.modal {
+    touch-action: auto;
+}
+
+/* Fix for sidebar overlay */
+.sidebar-overlay {
+    touch-action: auto;
+    cursor: pointer;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 767px) {
+
+    /* Increase touch target sizes */
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .menu-item {
+        min-height: 48px;
+        padding: 1rem 1.5rem;
+    }
+
+    /* Better spacing for mobile */
+    .table tbody td,
+    .table thead th {
+        min-width: 80px;
+    }
+
+    /* Prevent text selection on interactive elements */
+    .stat-card,
+    .warning-card,
+    .card {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/* ============================================
+   CRITICAL MOBILE FIXES - DO NOT REMOVE
+   ============================================ */
+
+/* Fix 1: Ensure overlay doesn't block clicks */
+.sidebar-overlay {
+    pointer-events: none !important;
+}
+
+.sidebar-overlay.active {
+    pointer-events: auto !important;
+}
+
+/* Fix 2: All clickable elements must work */
+a,
+button,
+input,
+select,
+textarea,
+label,
+[role="button"],
+[onclick],
+.btn,
+.menu-item,
+.stat-card,
+.card,
+.clickable {
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.3) !important;
+    touch-action: manipulation !important;
+    cursor: pointer;
+}
+
+/* Fix 3: Buttons must be above everything */
+.btn,
+button,
+a.btn {
+    position: relative;
+    z-index: 10;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Fix 4: Menu items must be clickable */
+.menu-item {
+    position: relative;
+    z-index: 10;
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+/* Fix 5: Active states for visual feedback */
+.btn:active,
+button:active {
+    transform: scale(0.95) !important;
+    opacity: 0.9;
+}
+
+.menu-item:active {
+    background: rgba(220, 38, 38, 0.25) !important;
+}
+
+/* Fix 6: Ensure main content is interactive */
+.main-content {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+/* Fix 7: Table elements must be clickable */
+.table tbody tr,
+.table tbody td,
+.table a,
+.table button {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+}
+
+/* Fix 8: Form elements must work */
+form,
+form * {
+    pointer-events: auto !important;
+}
+
+/* Fix 9: Prevent iOS issues */
+* {
+    -webkit-touch-callout: default;
+}
+
+/* Fix 10: Mobile z-index hierarchy */
+@media (max-width: 767px) {
+    .sidebar.active {
+        z-index: 1001 !important;
+    }
+
+    .sidebar-overlay.active {
+        z-index: 1000 !important;
+    }
+
+    .main-content {
+        z-index: 1 !important;
+    }
+}
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+.theme-toggle {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+}
+
+.theme-toggle:hover {
+    background: rgba(220, 38, 38, 0.2);
+    transform: scale(1.05);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle i {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(20deg);
+}
+
+/* Icon rotation animation on theme change */
+.theme-toggle.rotating i {
+    animation: rotateIcon 0.5s ease;
+}
+
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(180deg);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .theme-toggle {
+    background: rgba(220, 38, 38, 0.05);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(220, 38, 38, 0.1);
+}

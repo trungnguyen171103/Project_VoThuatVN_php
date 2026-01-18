@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Test Mobile Click</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        h1 {
+            color: #ff4444;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .test-box {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #444;
+        }
+
+        button {
+            width: 100%;
+            padding: 20px;
+            margin: 10px 0;
+            font-size: 18px;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(255, 68, 68, 0.3);
+            min-height: 60px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+            background: #990000;
+        }
+
+        .result {
+            background: #004400;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 2px solid #00ff00;
+            display: none;
+            font-weight: bold;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .counter {
+            font-size: 48px;
+            text-align: center;
+            color: #ff4444;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .log {
+            background: #000;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .log-item {
+            padding: 3px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        a {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            touch-action: manipulation;
+        }
+
+        a:active {
+            background: #004499;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 TEST MOBILE CLICK</h1>
+
+    <div class="test-box">
+        <h2>Test 1: Button Click</h2>
+        <button onclick="test1()">CLICK ĐỂ TEST</button>
+        <div id="result1" class="result">✅ BUTTON HOẠT ĐỘNG!</div>
+    </div>
+
+    <div class="test-box">
+        <h2>Test 2: Counter</h2>
+        <div class="counter" id="counter">0</div>
+        <button onclick="increment()">CLICK ĐỂ TĂNG</button>
+    </div>
+
+    <div class="test-box">
+        <h2>Test 3: Link</h2>
+        <a href="#" onclick="event.preventDefault(); test3();">CLICK LINK NÀY</a>
+        <div id="result3" class="result">✅ LINK HOẠT ĐỘNG!</div>
+    </div>
+
+    <div class="test-box">
+        <h2>Test 4: Multiple Buttons</h2>
+        <button onclick="showMessage('Button 1')">BUTTON 1</button>
+        <button onclick="showMessage('Button 2')">BUTTON 2</button>
+        <button onclick="showMessage('Button 3')">BUTTON 3</button>
+        <div id="result4" class="result"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Event Log</h2>
+        <button onclick="clearLog()">XÓA LOG</button>
+        <div class="log" id="log"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Device Info</h2>
+        <div id="info" style="font-size: 14px; line-height: 1.8;"></div>
+    </div>
+
+    <script>
+        let counter = 0;
+        let logCount = 0;
+
+        // Test 1
+        function test1() {
+            document.getElementById('result1').classList.add('show');
+            addLog('Test 1: Button clicked');
+            setTimeout(() => {
+                document.getElementById('result1').classList.remove('show');
+            }, 2000);
+        }
+
+        // Test 2
+        function increment() {
+            counter++;
+            document.getElementById('counter').textContent = counter;
+            addLog('Counter: ' + counter);
+        }
+
+        // Test 3
+        function test3() {
+            document.getElementById('result3').classList.add('show');
+            addLog('Test 3: Link clicked');
+            setTimeout(() => {
+                document.getElementById('result3').classList.remove('show');
+            }, 2000);
+        }
+
+        // Test 4
+        function showMessage(msg) {
+            const result = document.getElementById('result4');
+            result.textContent = '✅ ' + msg + ' clicked!';
+            result.classList.add('show');
+            addLog('Test 4: ' + msg);
+            setTimeout(() => {
+                result.classList.remove('show');
+            }, 2000);
+        }
+
+        // Add log
+        function addLog(message) {
+            logCount++;
+            const log = document.getElementById('log');
+            const item = document.createElement('div');
+            item.className = 'log-item';
+            const time = new Date().toLocaleTimeString();
+            item.textContent = '[' + logCount + '] ' + time + ' - ' + message;
+            log.insertBefore(item, log.firstChild);
+
+            // Keep only last 20
+            while (log.children.length > 20) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        // Clear log
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+            logCount = 0;
+            addLog('Log cleared');
+        }
+
+        // Device info
+        function showDeviceInfo() {
+            const info = document.getElementById('info');
+            const isTouch = 'ontouchstart' in window;
+
+            info.innerHTML = `
+                <strong>User Agent:</strong><br>
+                ${navigator.userAgent}<br><br>
+                <strong>Screen:</strong> ${window.screen.width} x ${window.screen.height}<br>
+                <strong>Viewport:</strong> ${window.innerWidth} x ${window.innerHeight}<br>
+                <strong>Touch Support:</strong> ${isTouch ? '✅ YES' : '❌ NO'}<br>
+                <strong>Platform:</strong> ${navigator.platform}<br>
+                <strong>Online:</strong> ${navigator.onLine ? '✅ YES' : '❌ NO'}
+            `;
+        }
+
+        // Event listeners
+        document.addEventListener('touchstart', function (e) {
+            addLog('Touch: ' + e.target.tagName);
+        }, { passive: true });
+
+        document.addEventListener('click', function (e) {
+            addLog('Click: ' + e.target.tagName);
+        });
+
+        // Initialize
+        showDeviceInfo();
+        addLog('Page loaded - Test ready!');
+
+        console.log('✅ Test page loaded');
+        console.log('Touch support:', 'ontouchstart' in window);
+    </script>
+</body>
+
+</html>
