@@ -42,14 +42,14 @@
             --primary-red: #dc2626;
             --primary-red-dark: #b91c1c;
             --primary-red-light: #ef4444;
-            --dark-bg-1: #0f172a;
-            --dark-bg-2: #1e293b;
-            --dark-bg-3: #334155;
-            --dark-bg-4: #475569;
-            --text-white: #ffffff;
-            --text-gray: #cbd5e1;
-            --text-gray-light: #94a3b8;
-            --text-gray-dark: #64748b;
+            --light-bg-1: #f8fafc;
+            --light-bg-2: #ffffff;
+            --light-bg-3: #f1f5f9;
+            --light-bg-4: #e2e8f0;
+            --text-dark: #0f172a;
+            --text-gray: #475569;
+            --text-gray-light: #64748b;
+            --text-gray-dark: #1e293b;
         }
 
         * {
@@ -64,8 +64,8 @@
 
         body {
             font-family: 'Inter', 'Roboto', sans-serif;
-            background: var(--dark-bg-1);
-            color: var(--text-white);
+            background: var(--light-bg-1);
+            color: var(--text-dark);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -95,14 +95,14 @@
             opacity: 0.4;
         }
 
-        /* Dark Overlay */
+        /* Light Overlay */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.92) 100%);
+            background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(255, 255, 255, 0.92) 100%);
             z-index: 1;
         }
 
@@ -126,7 +126,7 @@
         .brand-logo h1 {
             font-size: 3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--text-white) 0%, var(--primary-red-light) 50%, var(--text-white) 100%);
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary-red-light) 50%, var(--text-dark) 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,8 +134,8 @@
             letter-spacing: 3px;
             margin-bottom: 0.5rem;
             animation: textGlow 3s ease-in-out infinite, gradientShift 5s ease infinite;
-            text-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
-            filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.3));
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+            filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.1));
         }
 
         .brand-logo p {
@@ -149,17 +149,14 @@
             width: 180px;
             height: 180px;
             object-fit: contain;
-            filter: brightness(1.5) contrast(1.2)
-                    drop-shadow(0 0 15px rgba(255, 255, 255, 0.9))
-                    drop-shadow(0 0 35px rgba(255, 50, 50, 0.7))
-                    drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
+            filter: brightness(1.5) contrast(1.2) drop-shadow(0 0 15px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 35px rgba(255, 50, 50, 0.7)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
             animation: authPulse 4s infinite ease-in-out;
         }
 
         .brand-name {
             font-size: 2.5rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 0%, #ff3333 50%, #ffffff 100%);
+            background: linear-gradient(135deg, var(--text-dark) 0%, #ff3333 50%, var(--text-dark) 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -167,12 +164,17 @@
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
             animation: textGradientShift 5s infinite linear;
-            text-shadow: 0 0 30px rgba(255, 50, 50, 0.8), 0 0 60px rgba(255, 50, 50, 0.4), 0 0 100px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 15px rgba(255, 50, 50, 0.4), 0 0 30px rgba(255, 50, 50, 0.2);
         }
 
         @keyframes textGradientShift {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
 
         @keyframes authPulse {
@@ -192,14 +194,14 @@
             }
         }
 
-        /* Auth Card */
+        /* Auth Card - Light Theme */
         .auth-card {
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(220, 38, 38, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 40px rgba(220, 38, 38, 0.05);
             max-width: 450px;
             width: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -207,7 +209,7 @@
 
         .auth-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(220, 38, 38, 0.2);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15), 0 0 50px rgba(220, 38, 38, 0.1);
         }
 
         .auth-card h2 {
@@ -215,8 +217,7 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-align: center;
-            color: var(--text-white);
-            text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+            color: var(--text-dark);
         }
 
         .auth-card .subtitle {
@@ -245,25 +246,25 @@
         }
 
         .form-control {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--light-bg-2);
+            border: 1px solid var(--light-bg-4);
             border-radius: 10px;
             padding: 0.75rem 1rem;
-            color: var(--text-white);
+            color: var(--text-dark);
             font-size: 0.95rem;
             transition: all 0.3s ease;
         }
 
         .form-control:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(15, 23, 42, 0.7);
+            border-color: var(--primary-red-light);
+            background: var(--light-bg-3);
         }
 
         .form-control:focus {
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--light-bg-2);
             border-color: var(--primary-red);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2), 0 0 20px rgba(220, 38, 38, 0.3);
-            color: var(--text-white);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1), 0 0 15px rgba(220, 38, 38, 0.1);
+            color: var(--text-dark);
             outline: none;
             transform: translateY(-2px);
         }
@@ -289,10 +290,10 @@
             padding: 0.85rem 2rem;
             font-weight: 600;
             font-size: 1rem;
-            color: var(--text-white);
+            color: #ffffff;
             width: 100%;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
             letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
@@ -361,17 +362,17 @@
         }
 
         .alert-danger {
-            background: rgba(220, 38, 38, 0.2);
-            color: #fca5a5;
-            border-left: 4px solid var(--primary-red);
-            backdrop-filter: blur(10px);
+            background: #dc2626;
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
         }
 
         .alert-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #86efac;
-            border-left: 4px solid #22c55e;
-            backdrop-filter: blur(10px);
+            background: #22c55e;
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
         }
 
         /* Checkbox */
@@ -405,7 +406,7 @@
         }
 
         .form-check-label:hover {
-            color: var(--text-white);
+            color: var(--text-dark);
         }
 
         /* Password Toggle Icon */

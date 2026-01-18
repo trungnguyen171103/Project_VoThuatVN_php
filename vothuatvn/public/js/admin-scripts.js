@@ -434,8 +434,8 @@
 
         if (!themeToggle || !themeIcon) return;
 
-        // Load saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
         setTheme(savedTheme);
 
         // Toggle theme on button click

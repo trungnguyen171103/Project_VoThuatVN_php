@@ -19,13 +19,16 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary flex-fill">
-                                        <i class="bi bi-search me-2"></i>Tìm kiếm
-                                    </button>
-                                    <a href="{{ route('admin.students.create') }}" class="btn btn-success flex-fill">
-                                        <i class="bi bi-plus-circle me-2"></i>Thêm võ sinh
-                                    </a>
+                                <div class="form-group">
+                                    <label class="form-label">&nbsp;</label>
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary flex-fill">
+                                            <i class="bi bi-search me-2"></i>Tìm kiếm
+                                        </button>
+                                        <a href="{{ route('admin.students.create') }}" class="btn btn-success flex-fill">
+                                            <i class="bi bi-plus-circle me-2"></i>Thêm võ sinh
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

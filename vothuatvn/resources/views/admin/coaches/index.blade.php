@@ -22,9 +22,12 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="bi bi-search me-2"></i>Tìm kiếm
-                                </button>
+                                <div class="form-group">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="bi bi-search me-2"></i>Tìm kiếm
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
