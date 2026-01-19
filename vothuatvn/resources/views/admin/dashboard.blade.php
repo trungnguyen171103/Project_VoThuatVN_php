@@ -374,7 +374,7 @@
 
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="stat-card animate-fade-in-up" style="animation-delay: 0.3s"
-                onclick="window.location='{{ route('admin.coaches.index') }}'">
+                onclick="window.location='{{ route('admin.users.index') }}'">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <p class="stat-label mb-2">Tổng số HLV</p>

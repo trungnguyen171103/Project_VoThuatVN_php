@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Club;
 use App\Models\Coach;
+use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
 
 class ClubController extends Controller
@@ -48,6 +49,9 @@ class ClubController extends Controller
             $club->coaches()->attach($request->coaches);
         }
 
+        // Log activity
+        ActivityLogger::log('created', "Tạo câu lạc bộ {$club->name}", Club::class, $club->id);
+
         return redirect()->route('admin.clubs.index')->with('success', 'Tạo câu lạc bộ thành công!');
     }
 
@@ -81,6 +85,9 @@ class ClubController extends Controller
         // Sync coaches
         $club->coaches()->sync($request->coaches ?? []);
 
+        // Log activity
+        ActivityLogger::log('updated', "Cập nhật câu lạc bộ {$club->name}", Club::class, $club->id);
+
         return redirect()->route('admin.clubs.index')->with('success', 'Cập nhật câu lạc bộ thành công!');
     }
 
@@ -96,7 +103,12 @@ class ClubController extends Controller
             return back()->with('error', 'Không thể xóa câu lạc bộ còn lớp học đang hoạt động.');
         }
 
+        $clubName = $club->name;
         $club->delete();
+
+        // Log activity
+        ActivityLogger::log('deleted', "Xóa câu lạc bộ {$clubName}", Club::class, $id);
+
         return back()->with('success', 'Xóa câu lạc bộ thành công!');
     }
 }

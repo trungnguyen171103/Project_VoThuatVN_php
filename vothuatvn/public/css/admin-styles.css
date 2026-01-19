@@ -112,6 +112,12 @@
     --shadow-glow: 0 0 20px rgba(220, 38, 38, 0.15);
 }
 
+/* Table Specific Fix for Light Theme */
+[data-theme="light"] .table th,
+[data-theme="light"] .table td {
+    color: #000000 !important;
+}
+
 /* ============================================
    RESET & BASE STYLES
    ============================================ */
@@ -150,47 +156,28 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Force white text color for all elements */
-body,
-body * {
+/* Base text color from variable without aggressive forcing */
+body {
     color: var(--color-text-primary);
 }
 
-/* Specific overrides for common elements */
-p,
-span,
-div,
-label,
-a,
-li,
-td,
-th,
+.text-muted {
+    color: var(--color-text-muted) !important;
+}
+
+/* Ensure headings and common elements use the primary text color */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
-    color: var(--color-text-primary) !important;
-}
-
-/* Table text */
-.table,
-.table * {
-    color: var(--color-text-primary) !important;
-}
-
-/* Form elements */
-input,
-textarea,
-select,
-option {
-    color: var(--color-text-primary) !important;
-}
-
-/* Preserve specific color classes */
-.text-muted {
-    color: var(--color-text-muted) !important;
+h6,
+p,
+span,
+label,
+td,
+th {
+    color: var(--color-text-primary);
 }
 
 
@@ -778,13 +765,19 @@ input[type="number"]::-webkit-outer-spin-button {
     background: transparent !important;
 }
 
-/* Force dark background for all table elements */
+/* Force dark background for all table elements, excluding buttons and badges */
 .table,
-.table *,
 .table tr,
 .table td,
 .table th {
     background-color: transparent !important;
+}
+
+/* Ensure buttons and badges inside tables keep their background */
+.table .btn,
+.table .badge {
+    background-color: auto;
+    /* Allow normal background to show through */
 }
 
 .table tbody {
@@ -804,6 +797,18 @@ input[type="number"]::-webkit-outer-spin-button {
     border-radius: var(--radius-full);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.badge-primary {
+    background: rgba(220, 38, 38, 0.2);
+    color: var(--color-primary);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.badge-secondary {
+    background: rgba(148, 163, 184, 0.2);
+    color: var(--color-text-muted);
+    border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
 .badge-success {
@@ -1341,4 +1346,80 @@ form * {
 
 [data-theme="light"] .theme-toggle:hover {
     background: rgba(220, 38, 38, 0.1);
+}
+
+/* ============================================
+   BUTTON TEXT COLOR FIX
+   Force white text on all colored buttons
+   ============================================ */
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-dark,
+.bg-primary,
+.bg-success,
+.bg-danger,
+.bg-warning,
+.bg-info,
+.badge.bg-primary,
+.badge.bg-success,
+.badge.bg-danger,
+.badge.bg-warning,
+.badge.bg-info {
+    color: #ffffff !important;
+}
+
+/* Ensure button text stays white on hover */
+.btn-primary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-warning:hover,
+.btn-info:hover,
+.btn-dark:hover {
+    color: #ffffff !important;
+}
+
+/* Icons and spans inside buttons should also be white */
+.btn-primary *,
+.btn-success *,
+.btn-danger *,
+.btn-warning *,
+.btn-info *,
+.btn-dark * {
+    color: #ffffff !important;
+}
+
+/* Pagination & SVG Safeguard */
+svg.w-5.h-5,
+.pagination svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+}
+
+.pagination {
+    margin-bottom: 0;
+    gap: 5px;
+}
+
+.page-link {
+    background: var(--color-bg-3);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    border-radius: 8px !important;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.page-item.active .page-link {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff !important;
+}
+
+.page-link:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
 }

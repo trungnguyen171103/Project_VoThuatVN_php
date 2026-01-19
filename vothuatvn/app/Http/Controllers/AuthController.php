@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,14 +41,17 @@ class AuthController extends Controller
             // Login thành công
             Auth::login($user, $request->filled('remember'));
             $request->session()->regenerate();
-            
+
+            // Log activity
+            ActivityLogger::log('login', "Đăng nhập vào hệ thống", User::class, $user->id);
+
             // Redirect theo role
             if ($user->isAdmin()) {
                 return redirect()->intended('/admin/dashboard')->with('success', 'Đăng nhập thành công!');
             } elseif ($user->isCoach()) {
                 return redirect()->intended('/coach/dashboard')->with('success', 'Đăng nhập thành công!');
             }
-            
+
             return redirect()->intended('/dashboard')->with('success', 'Đăng nhập thành công!');
         }
 
@@ -82,7 +86,7 @@ class AuthController extends Controller
             ],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'regex:/^[0-9]{10,11}$/'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10,11}$/', 'unique:users,phone'],
             'password' => ['required', 'confirmed', Password::min(8)],
         ], [
             'username.required' => 'Vui lòng nhập tên đăng nhập',
@@ -97,6 +101,7 @@ class AuthController extends Controller
             'email.unique' => 'Email này đã được đăng ký',
             'phone.required' => 'Vui lòng nhập số điện thoại',
             'phone.regex' => 'Số điện thoại phải có 10 hoặc 11 chữ số',
+            'phone.unique' => 'Số điện thoại này đã được đăng ký',
             'password.required' => 'Vui lòng nhập mật khẩu',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
@@ -125,11 +130,14 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        // Log activity before logout
+        ActivityLogger::log('logout', "Đăng xuất khỏi hệ thống");
+
         Auth::logout();
-        
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/login')->with('success', 'Đã đăng xuất thành công.');
     }
 }

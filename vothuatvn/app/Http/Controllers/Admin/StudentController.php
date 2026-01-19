@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Club;
 use App\Models\Student;
+use App\Services\ActivityLogger;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -51,7 +54,7 @@ class StudentController extends Controller
         ]);
 
         foreach ($request->students as $studentData) {
-            Student::create([
+            $student = Student::create([
                 'full_name' => $studentData['full_name'],
                 'birth_year' => $studentData['birth_year'],
                 'phone' => $studentData['phone'],
@@ -59,6 +62,9 @@ class StudentController extends Controller
                 'registration_date' => $studentData['registration_date'],
                 'status' => 'active',
             ]);
+
+            // Log activity for each student
+            ActivityLogger::log('created', "Thêm võ sinh {$student->full_name}", Student::class, $student->id);
         }
 
         $count = count($request->students);
@@ -100,6 +106,9 @@ class StudentController extends Controller
             'status' => $request->status,
         ]);
 
+        // Log activity
+        ActivityLogger::log('updated', "Cập nhật võ sinh {$student->full_name}", Student::class, $student->id);
+
         return redirect()->route('admin.students.index')->with('success', 'Cập nhật võ sinh thành công!');
     }
 
@@ -117,8 +126,117 @@ class StudentController extends Controller
             return back()->with('error', 'Không thể xóa võ sinh đang học lớp đang hoạt động!');
         }
 
+        $studentName = $student->full_name;
         $student->delete();
 
+        // Log activity
+        ActivityLogger::log('deleted', "Xóa võ sinh {$studentName}", Student::class, $id);
+
         return back()->with('success', 'Xóa võ sinh thành công!');
+    }
+
+    /**
+     * Import students from Excel data (JSON)
+     */
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'students' => 'required|array|min:1'
+        ], [
+            'students.required' => 'Không có dữ liệu võ sinh để nhập'
+        ]);
+
+        $studentsData = $request->students;
+        $importedCount = 0;
+        $errors = [];
+
+        foreach ($studentsData as $index => $row) {
+            // Expected format via JS: { full_name, birth_year, phone, address }
+            $fullName = $row['full_name'] ?? null;
+            $birthYear = $row['birth_year'] ?? null;
+            $phone = $row['phone'] ?? null;
+            $address = $row['address'] ?? null;
+
+            if (empty($fullName) || empty($birthYear) || empty($phone)) {
+                $errors[] = "Dòng " . ($index + 1) . ": Thiếu thông tin bắt buộc.";
+                continue;
+            }
+
+            try {
+                $student = Student::create([
+                    'full_name' => $fullName,
+                    'birth_year' => (int) $birthYear,
+                    'phone' => $phone,
+                    'address' => $address ?? 'Chưa cập nhật',
+                    'registration_date' => now(),
+                    'status' => 'active',
+                ]);
+
+                ActivityLogger::log('created', "Nhập võ sinh từ Excel: {$student->full_name}", Student::class, $student->id);
+                $importedCount++;
+            } catch (\Exception $e) {
+                $errors[] = "Dòng " . ($index + 1) . ": Lỗi khi lưu dữ liệu.";
+            }
+        }
+
+        if (count($errors) > 0) {
+            $msg = "Đã nhập thành công {$importedCount} võ sinh. ";
+            $msg .= "Lưu ý: Có " . count($errors) . " lỗi xảy ra.";
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'imported_count' => $importedCount,
+                'error_count' => count($errors)
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Đã nhập thành công {$importedCount} võ sinh từ file Excel!",
+            'imported_count' => $importedCount
+        ]);
+    }
+
+    /**
+     * Bulk delete students
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:students,id'
+        ]);
+
+        $ids = $request->ids;
+        $successCount = 0;
+        $failCount = 0;
+        $errors = [];
+
+        foreach ($ids as $id) {
+            $student = Student::find($id);
+            if (!$student)
+                continue;
+
+            // Check if student is in any active classes
+            if ($student->classes()->where('status', 'active')->exists()) {
+                $failCount++;
+                $errors[] = "Võ sinh {$student->full_name} đang học lớp đang hoạt động.";
+                continue;
+            }
+
+            $studentName = $student->full_name;
+            $student->delete();
+
+            ActivityLogger::log('deleted', "Xóa nhanh võ sinh {$studentName}", Student::class, $id);
+            $successCount++;
+        }
+
+        $message = "Đã xóa thành công {$successCount} võ sinh.";
+        if ($failCount > 0) {
+            $message .= " Thất bại {$failCount} võ sinh (đang tham gia lớp học).";
+            return back()->with('warning', $message);
+        }
+
+        return back()->with('success', $message);
     }
 }

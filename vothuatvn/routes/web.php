@@ -55,13 +55,6 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     // Dashboard
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
-    // Coach Management
-    Route::get('/coaches', [\App\Http\Controllers\Admin\CoachController::class, 'index'])->name('coaches.index');
-    Route::get('/coaches/create', [\App\Http\Controllers\Admin\CoachController::class, 'create'])->name('coaches.create');
-    Route::post('/coaches/search', [\App\Http\Controllers\Admin\CoachController::class, 'search'])->name('coaches.search');
-    Route::post('/coaches/assign', [\App\Http\Controllers\Admin\CoachController::class, 'assignCoach'])->name('coaches.assign');
-    Route::delete('/coaches/{id}', [\App\Http\Controllers\Admin\CoachController::class, 'destroy'])->name('coaches.destroy');
-
     // Club Management
     Route::resource('clubs', \App\Http\Controllers\Admin\ClubController::class);
 
@@ -79,6 +72,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/clubs/{id}/coaches', [\App\Http\Controllers\Admin\ClassController::class, 'getClubCoaches'])->name('clubs.coaches');
 
     // Student Management
+    Route::post('/students/import-excel', [\App\Http\Controllers\Admin\StudentController::class, 'importExcel'])->name('students.import-excel');
+    Route::post('/students/bulk-destroy', [\App\Http\Controllers\Admin\StudentController::class, 'bulkDestroy'])->name('students.bulk-destroy');
     Route::resource('students', \App\Http\Controllers\Admin\StudentController::class);
 
     // Schedule Management
@@ -116,6 +111,12 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
     Route::put('/users/{id}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
     Route::delete('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+    Route::put('/users/{id}/update-role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.update-role');
+    Route::post('/users/{id}/assign-coach', [\App\Http\Controllers\Admin\UserController::class, 'assignCoach'])->name('users.assign-coach');
+    Route::post('/users/{id}/remove-coach', [\App\Http\Controllers\Admin\UserController::class, 'removeCoach'])->name('users.remove-coach');
+
+    // Activity Logs
+    Route::get('/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-logs.index');
 });
 
 // Coach Routes

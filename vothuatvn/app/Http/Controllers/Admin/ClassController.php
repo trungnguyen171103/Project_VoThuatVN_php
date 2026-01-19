@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\Club;
 use App\Models\Coach;
 use App\Models\Student;
+use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -74,7 +75,7 @@ class ClassController extends Controller
             'end_date' => 'nullable|date|after:start_date',
         ]);
 
-        ClassModel::create([
+        $class = ClassModel::create([
             'club_id' => $request->club_id,
             'name' => $request->name,
             'coach_id' => $request->coach_id,
@@ -84,6 +85,9 @@ class ClassController extends Controller
             'end_date' => $request->end_date,
             'status' => 'active',
         ]);
+
+        // Log activity
+        ActivityLogger::log('created', "Tạo lớp học {$class->name}", ClassModel::class, $class->id);
 
         return redirect()->route('admin.classes.index')->with('success', 'Tạo lớp học thành công!');
     }
@@ -131,6 +135,9 @@ class ClassController extends Controller
             'status' => $request->status,
         ]);
 
+        // Log activity
+        ActivityLogger::log('updated', "Cập nhật lớp học {$class->name}", ClassModel::class, $class->id);
+
         return redirect()->route('admin.classes.index')->with('success', 'Cập nhật lớp học thành công!');
     }
 
@@ -140,7 +147,11 @@ class ClassController extends Controller
     public function destroy($id)
     {
         $class = ClassModel::findOrFail($id);
+        $className = $class->name;
         $class->delete();
+
+        // Log activity
+        ActivityLogger::log('deleted', "Xóa lớp học {$className}", ClassModel::class, $id);
 
         return back()->with('success', 'Xóa lớp học thành công!');
     }

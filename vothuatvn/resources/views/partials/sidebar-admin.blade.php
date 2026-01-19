@@ -13,12 +13,6 @@
             <span>Dashboard</span>
         </a>
 
-        <a href="{{ route('admin.coaches.index') }}"
-            class="menu-item {{ request()->routeIs('admin.coaches.*') ? 'active' : '' }}">
-            <i class="bi bi-person-badge"></i>
-            <span>Quản lý HLV</span>
-        </a>
-
         <a href="{{ route('admin.clubs.index') }}"
             class="menu-item {{ request()->routeIs('admin.clubs.*') ? 'active' : '' }}">
             <i class="bi bi-building"></i>
@@ -78,6 +72,12 @@
             class="menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
             <i class="bi bi-person-gear"></i>
             <span>Quản lý Tài khoản</span>
+        </a>
+
+        <a href="{{ route('admin.activity-logs.index') }}"
+            class="menu-item {{ request()->routeIs('admin.activity-logs.*') ? 'active' : '' }}">
+            <i class="bi bi-clock-history"></i>
+            <span>Nhật ký hoạt động</span>
         </a>
     </nav>
 </aside>
